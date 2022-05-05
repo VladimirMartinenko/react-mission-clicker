@@ -3,7 +3,7 @@
   justify-content: center;
   }
 
-.containerTimer {
+.containerClicker {
   display: flex;
   flex-direction: column;
   align-items: center;

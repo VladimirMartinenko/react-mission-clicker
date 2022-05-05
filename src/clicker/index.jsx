@@ -2,20 +2,20 @@ import React from "react";
 import Settingstep from "./settingStep.jsx";
 import styles from "./styles.module.css"
 
-class Timer extends React.Component {
+class Clicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
-      number: 1,
+      number: 0,
+      step: 1,
       isClick: true,
-      timerId: null,
+      clickerId: null,
       interval: 1000,
       color:null,
     };
     this.isRendered = false;
     this.isFirstStart = true;
-    this.workTimer = 30000;
+    this.workClicker = 30000;
     }
   componentDidMount() {
     if (this.isRendered) {
@@ -23,7 +23,7 @@ class Timer extends React.Component {
     }
     this.isRendered = true;
     console.log("mount");
-    if (!this.state.timerId) {
+    if (!this.state.clickerId) {
       this.autoclick();
     }
   }
@@ -37,25 +37,25 @@ class Timer extends React.Component {
   }
   autoclick = () => {
     // const { time, number } = this.state;
-    if (!this.state.timerId) {
-      const timerId = setInterval(() => {
+    if (!this.state.clickerId) {
+      const clickerId = setInterval(() => {
         this.setState({
-          time: this.state.time + this.state.number,
-          timerId,
+          number: this.state.number+ this.state.step,
+          clickerId,
         });
       }, this.state.interval);
     }
     if (this.isFirstStart) {
       this.isFirstStart = false;
       setTimeout(() => {
-        clearInterval(this.state.timerId);
+        clearInterval(this.state.clickerId);
         this.stop();
-      }, this.workTimer);
+      }, this.workClicker);
     }
   };
   stop = () => {
-      clearInterval(this.state.timerId);
-      this.setState({ timerId: null });
+      clearInterval(this.state.clickerId);
+      this.setState({ clickerId: null });
   };
   intervalstep = (e) => {
     this.setState({
@@ -63,23 +63,23 @@ class Timer extends React.Component {
     });
   };
   pluss = () => {
-    const { time, number } = this.state;
+    const { number, step } = this.state;
     this.setState({
-      time: time + number,
+      number: number + step,
       color:{'background-color':"green"}
     });
   };
 
-  step = (e) => {
+  installstep = (e) => {
     console.log("привет");
     this.setState({
-      number: +(e.target.value),
+      step: +(e.target.value),
     });
   };
   minus = () => {
-    const { time, number } = this.state;
+    const { number, step } = this.state;
     this.setState({
-      time: time - number,
+      number: number - step,
       color:{'background-color':"red"}
     });
     
@@ -87,12 +87,12 @@ class Timer extends React.Component {
   
 
   render() {
-    const { time, number, isClick, interval} = this.state;
+    const { number, step, isClick, interval} = this.state;
     return (
       <article className={styles.container} >
-        <div className={styles.containerTimer} style={this.state.color} >
-        <div>Таймер: {time}</div>
-        <div>ШАГ: {number}</div>
+        <div className={styles.containerClicker} style={this.state.color} >
+        <div>Таймер: {number}</div>
+        <div>ШАГ: {step}</div>
         <div>
         <button onClick={isClick ? this.pluss : this.minus}>добавить</button>
         {/* <input onChange={this.step} type="text" name="number" value={number} /> */}
@@ -105,18 +105,18 @@ class Timer extends React.Component {
         <button onClick={this.stop}>stop</button>
         </div>
         <div>
-        <Settingstep number={number} step={this.step} />
+        <Settingstep step={step} installstep={this.installstep} />
         <label htmlFor="">Частота автонажатий:<input
           onChange={this.intervalstep}
           type="text"
           name="number"
           value={interval}
         /></label>
-        <div>Время работы при запуске: {this.workTimer} ms.</div>
+        <div>Время работы при запуске: {this.workClicker} ms.</div>
         </div>
         </div>
         </article>
     );
   }
 }
-export default Timer;
+export default Clicker;

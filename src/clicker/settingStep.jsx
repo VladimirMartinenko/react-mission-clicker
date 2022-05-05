@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Settingstep = ({number,step}) => {
+const Settingstep = ({step,installstep}) => {
     return (
     <div>
       
-      <label htmlFor="">Введите шаг:<input onChange={step} type="text" name="number" value={number} /></label>
+      <label htmlFor="">Введите шаг:<input onChange={installstep} type="text" name="number" value={step} /></label>
     </div>
   );
 }
