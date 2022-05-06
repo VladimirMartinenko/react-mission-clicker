@@ -29,7 +29,6 @@ class Clicker extends React.Component {
   }
   componentDidUpdate() {
     console.log("update");
-    this.meaning+=1
   }
   componentWillUnmount() {
     console.log("unmount");
